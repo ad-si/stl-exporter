@@ -1,12 +1,28 @@
+fs = require 'fs'
+path = require 'path'
+stlExporter = require('../source/index')
+yaml = require 'js-yaml'
+expect = require('chai').expect
 
-describe 'STL Exporter', =>
-	it.skip 'should export an STL file', () =>
 
-		stlExporter = require('../exporters/stl')
+describe 'STL Exporter', ->
+	it 'exports an STL file', () ->
+		tetrahedron = yaml.safeLoad fs.readFileSync path.join(
+			__dirname,
+			'models/faceVertexTetrahedron.yaml'
+		)
 
-		asciiStl = fs.readFileSync modelsMap['objects/gearwheel'].asciiPath
+		tetrahedronStl = fs.readFileSync(
+			path.resolve(
+				__dirname,
+				'../node_modules/stl-models/polytopes/tetrahedron.ascii.stl'
+			),
+			'utf-8'
+		)
 
-		return meshlib asciiStl, {format: 'stl'}
-		.optimize()
-		.done (model) ->
-			fs.writeFileSync 'test.stl', stlExporter.toAsciiStl model.mesh
+		convertedTetrahedronStl = stlExporter.toAsciiStl(
+			tetrahedron,
+			{beautify: true}
+		)
+
+		expect(convertedTetrahedronStl).to.equal(tetrahedronStl)
