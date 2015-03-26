@@ -1,5 +1,5 @@
-toAsciiStl = require './faceVertexMeshToAsciiStl.coffee'
-toBinaryStl = require './faceVertexMeshToBinaryStl.coffee'
+toAsciiStl = require './faceVertexMeshToAsciiStl'
+toBinaryStl = require './faceVertexMeshToBinaryStl'
 
 if typeof window isnt 'undefined'
 	saveAs = require 'filesaver.js'
