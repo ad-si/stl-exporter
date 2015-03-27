@@ -2,12 +2,15 @@
   "name": "stl-exporter",
   "version": "0.2.0",
   "description": "Convert face-vertex, or polygon meshes to ascii and binary STLs",
-  "main": "index.coffee",
+  "main": "build/index.js",
+  "bin": "cli/index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register"
+    "test": "mocha --compilers coffee:coffee-script/register",
+    "build": "coffee -c -o build source",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "STL"
