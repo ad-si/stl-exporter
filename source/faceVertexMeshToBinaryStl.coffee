@@ -1,5 +1,5 @@
 module.exports = (model) ->
-	{faceNormals, indices, positions} = model
+	{faceNormalCoordinates, faceVertexIndices, vertexCoordinates} = model
 
 	# Length in byte
 	headerLength = 80 # 80 * uint8
@@ -7,32 +7,38 @@ module.exports = (model) ->
 	vectorLength = 12 # 3 * float32
 	attributeByteCountLength = 2 # 1 * uint16
 	facetLength = (vectorLength * 4 + attributeByteCountLength)
-	contentLength = (indices.length / 3) * facetLength
+	contentLength = (faceVertexIndices.length / 3) * facetLength
 	bufferLength = headerLength + facetsCounterLength + contentLength
 
 	buffer = new ArrayBuffer(bufferLength)
 	dataView = new DataView(buffer, headerLength)
 	le = true # little-endian
 
-	dataView.setUint32(0, (indices.length / 3), le)
+	dataView.setUint32(0, (faceVertexIndices.length / 3), le)
 	offset = facetsCounterLength
 
-	for i in [0...indices.length] by 3
+	for i in [0...faceVertexIndices.length] by 3
 		# Normal
-		dataView.setFloat32(offset, faceNormals[i], le)
-		dataView.setFloat32(offset += 4, faceNormals[i + 1], le)
-		dataView.setFloat32(offset += 4, faceNormals[i + 2], le)
+		dataView.setFloat32(offset, faceNormalCoordinates[i], le)
+		dataView.setFloat32(offset += 4, faceNormalCoordinates[i + 1], le)
+		dataView.setFloat32(offset += 4, faceNormalCoordinates[i + 2], le)
 
 		# X,Y,Z-Vector
 		for a in [0..2]
 			dataView.setFloat32(
-					offset += 4, positions[indices[i + a] * 3], le
+				offset += 4,
+				vertexCoordinates[faceVertexIndices[i + a] * 3],
+				le
 			)
 			dataView.setFloat32(
-					offset += 4, positions[indices[i + a] * 3 + 1], le
+				offset += 4,
+				vertexCoordinates[faceVertexIndices[i + a] * 3 + 1],
+				le
 			)
 			dataView.setFloat32(
-					offset += 4, positions[indices[i + a] * 3 + 2], le
+				offset += 4,
+				vertexCoordinates[faceVertexIndices[i + a] * 3 + 2],
+				le
 			)
 
 		# Attribute Byte Count

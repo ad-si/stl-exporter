@@ -1,5 +1,5 @@
 name: tetrahedron
-verticesCoordinates:
+vertexCoordinates:
   - 0
   - 0
   - 0
@@ -16,7 +16,7 @@ verticesCoordinates:
   - 0
   - 1
 
-facesVerticesIndices:
+faceVertexIndices:
   - 1
   - 2
   - 3
@@ -33,7 +33,7 @@ facesVerticesIndices:
   - 2
   - 1
 
-facesNormals:
+faceNormalCoordinates:
   - 0.57735027
   - 0.57735027
   - 0.57735027
