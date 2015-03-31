@@ -1,5 +1,17 @@
+textEncoding = require 'text-encoding'
+TextEncoder = textEncoding.TextEncoder
+TextDecoder = textEncoding.TextDecoder
+
+
+writeStringToBufferView = (string, bufferView) ->
+	stringUint8array = TextEncoder().encode string
+
+	for index in [0...bufferView.byteLength]
+		bufferView.setUint8 index, stringUint8array[index] || 0
+
+
 module.exports = (model) ->
-	{faceNormalCoordinates, faceVertexIndices, vertexCoordinates} = model
+	{faceNormalCoordinates, faceVertexIndices, vertexCoordinates, name} = model
 
 	# Length in byte
 	headerLength = 80 # 80 * uint8
@@ -10,9 +22,12 @@ module.exports = (model) ->
 	contentLength = (faceVertexIndices.length / 3) * facetLength
 	bufferLength = headerLength + facetsCounterLength + contentLength
 
-	buffer = new ArrayBuffer(bufferLength)
-	dataView = new DataView(buffer, headerLength)
+	buffer = new ArrayBuffer bufferLength
+	headerView = new DataView buffer, 0, 80
+	dataView = new DataView buffer, headerLength
 	le = true # little-endian
+
+	writeStringToBufferView name, headerView
 
 	dataView.setUint32(0, (faceVertexIndices.length / 3), le)
 	offset = facetsCounterLength
