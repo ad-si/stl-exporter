@@ -1,18 +1,26 @@
 fs = require 'fs'
 path = require 'path'
-stlExporter = require('../source/index')
-yaml = require 'js-yaml'
-expect = require('chai').expect
 
+yaml = require 'js-yaml'
+bufferConverter = require 'buffer-converter'
+
+stlExporter = require('../source/index')
+
+
+expect = require('chai').expect
 
 faceVertexTetrahedron = yaml.safeLoad fs.readFileSync path.join(
 	__dirname,
 	'models/faceVertexTetrahedron.yaml'
 )
+faceVertexTriangle = yaml.safeLoad fs.readFileSync path.join(
+	__dirname,
+	'models/faceVertexTriangle.yaml'
+)
 
 
 describe 'STL Exporter', ->
-	it 'exports an STL file', () ->
+	it 'exports an ASCII STL file', () ->
 		minifiedTetrahedronStl = fs.readFileSync(
 			path.resolve(
 				__dirname,
@@ -24,6 +32,21 @@ describe 'STL Exporter', ->
 		convertedTetrahedronStl = stlExporter.toAsciiStl(faceVertexTetrahedron)
 
 		expect(convertedTetrahedronStl).to.equal(minifiedTetrahedronStl)
+
+
+	it 'exports an binary STL file', () ->
+		minifiedTetrahedronStl = fs.readFileSync(
+			path.resolve(
+				__dirname,
+				'../node_modules/stl-models/polytopes/tetrahedron.bin.stl'
+			)
+		)
+
+		convertedTetrahedronStl = bufferConverter.toBuffer(
+			stlExporter.toBinaryStl faceVertexTetrahedron
+		)
+
+		expect(convertedTetrahedronStl).to.deep.equal(minifiedTetrahedronStl)
 
 
 	it 'exports an beautified STL file', () ->
