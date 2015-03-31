@@ -22,6 +22,10 @@
     "coffee-script": "^1.9.1",
     "js-yaml": "^3.2.7",
     "mocha": "^2.2.1",
-    "stl-models": "^0.5.0"
+    "stl-models": "^0.6.0"
+  },
+  "dependencies": {
+    "buffer-converter": "^0.2.0",
+    "text-encoding": "^0.5.2"
   }
 }
