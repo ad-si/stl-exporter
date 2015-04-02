@@ -10,36 +10,47 @@ mode = 'toAsciiStl'
 
 
 module.exports = () ->
+	if process.stdin.isTTY
 
-	output = ''
+		args = process.argv.slice(2)
+		output = ''
+		options = {}
 
-	if process.argv.length < 3
-		console.log "Usage:
-			#{path.basename process.argv[1]}
-			[--ascii (default)| --binary]
-			<json mesh-file>"
-		return process.exit 1
+		if not args.length
+			console.log "Usage:
+				#{path.basename process.argv[1]}
+				[--ascii (default)| --binary]
+				<json mesh-file>"
+			return process.exit 1
 
-	if process.argv[2] is '--binary' or process.argv[2] is '--ascii'
-		filePath = process.argv[3]
+
+		args.forEach (cliArgument) ->
+			if /^\-\-/i.test(cliArgument)
+				options[cliArgument.slice(2)] = true
+
+		filePath = args.pop()
+
+		if not path.isAbsolute filePath
+			filePath = path.join process.cwd(), filePath
+
+
+		jsonStl = yaml.safeLoad fs.readFileSync filePath
+
+
+		if options.binary
+			output = bufferConverter.toBuffer(
+				stlExporter.toBinaryStl jsonStl
+			)
+
+		else
+			output = stlExporter.toAsciiStl jsonStl
+
+
+		process.stdout.write output
 
 	else
-		filePath = process.argv[2]
+		process.stdin.setEncoding 'utf-8'
 
-	if not path.isAbsolute filePath
-		filePath = path.join process.cwd(), filePath
-
-
-	jsonStl = yaml.safeLoad fs.readFileSync filePath
-
-
-	if process.argv[2] is '--binary'
-		output = bufferConverter.toBuffer(
-			stlExporter.toBinaryStl jsonStl
-		)
-
-	else
-		output = stlExporter.toAsciiStl jsonStl
-
-
-	process.stdout.write output
+		process.stdin
+		.pipe stlExporter.getTransformStream()
+		.pipe process.stdout
