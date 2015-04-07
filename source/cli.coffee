@@ -10,23 +10,23 @@ mode = 'toAsciiStl'
 
 
 module.exports = () ->
-	if process.stdin.isTTY
+	args = process.argv.slice(2)
+	output = ''
+	flags = {}
 
-		args = process.argv.slice(2)
-		output = ''
-		options = {}
+	args.forEach (cliArgument) ->
+		if /^\-\-/i.test(cliArgument)
+			flags[cliArgument.slice(2)] = true
+
+
+	if process.stdin.isTTY
 
 		if not args.length
 			console.log "Usage:
-				#{path.basename process.argv[1]}
-				[--ascii (default)| --binary]
-				<json mesh-file>"
+					#{path.basename process.argv[1]}
+					[--ascii (default)| --binary]
+					<json mesh-file>"
 			return process.exit 1
-
-
-		args.forEach (cliArgument) ->
-			if /^\-\-/i.test(cliArgument)
-				options[cliArgument.slice(2)] = true
 
 		filePath = args.pop()
 
@@ -37,7 +37,7 @@ module.exports = () ->
 		jsonStl = yaml.safeLoad fs.readFileSync filePath
 
 
-		if options.binary
+		if flags.binary
 			output = bufferConverter.toBuffer(
 				stlExporter.toBinaryStl jsonStl
 			)
@@ -52,5 +52,7 @@ module.exports = () ->
 		process.stdin.setEncoding 'utf-8'
 
 		process.stdin
-		.pipe stlExporter.getTransformStream()
+		.pipe stlExporter.getTransformStream {
+			type: if flags.binary then 'binary' else 'ascii'
+		}
 		.pipe process.stdout
