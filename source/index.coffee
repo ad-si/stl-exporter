@@ -1,12 +1,18 @@
 toAsciiStl = require './faceVertexMeshToAsciiStl'
 toBinaryStl = require './faceVertexMeshToBinaryStl'
-StlSerializer = require './StlSerializer'
+AsciiSerializer = require './AsciiSerializer'
+BinarySerializer = require './BinarySerializer'
 
 module.exports =
 	toAsciiStl: toAsciiStl
 	toBinaryStl: toBinaryStl
 	getTransformStream: (options = {}) ->
-
 		options.type ?= 'binary'
 
-		return new StlSerializer options
+		if options.type is 'binary'
+			return new BinarySerializer options
+
+		if options.type is 'ascii'
+			return new AsciiSerializer options
+
+		throw new Error "Options type #{options.type} is not supported"

@@ -1,6 +1,5 @@
 stream = require 'stream'
 
-
 createFacetString = (face) ->
 	{normal, vertices} = face
 
@@ -25,7 +24,7 @@ createBeautifiedFacetString = (face) ->
 			'endfacet\n'
 
 
-class StlSerializer extends stream.Transform
+class AsciiSerializer extends stream.Transform
 	constructor: (@options = {}) ->
 		@options.writableObjectMode ?= true
 		@options.readableObjectMode ?= false
@@ -40,7 +39,6 @@ class StlSerializer extends stream.Transform
 
 	_transform: (chunk, encoding, done) ->
 		@internalBuffer = @internalBuffer.concat chunk.split('\n')
-
 
 		while data = @internalBuffer.shift()
 
@@ -58,4 +56,4 @@ class StlSerializer extends stream.Transform
 
 		done()
 
-module.exports = StlSerializer
+module.exports = AsciiSerializer
