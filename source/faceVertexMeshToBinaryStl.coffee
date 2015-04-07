@@ -23,7 +23,7 @@ module.exports = (model) ->
 	bufferLength = headerLength + facetsCounterLength + contentLength
 
 	buffer = new ArrayBuffer bufferLength
-	headerView = new DataView buffer, 0, 80
+	headerView = new DataView buffer, 0, headerLength
 	dataView = new DataView buffer, headerLength
 	le = true # little-endian
 
