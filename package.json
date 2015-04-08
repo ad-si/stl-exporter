@@ -1,6 +1,6 @@
 {
   "name": "stl-exporter",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Convert face-vertex, or polygon meshes to ascii and binary STLs",
   "main": "build/index.js",
   "bin": {
