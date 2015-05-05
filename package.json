@@ -27,7 +27,7 @@
     "stl-models": "^0.6.0"
   },
   "dependencies": {
-    "buffer-converter": "^0.2.0",
+    "buffer-converter": "^1.0.0",
     "text-encoding": "^0.5.2"
   },
   "repository": {
