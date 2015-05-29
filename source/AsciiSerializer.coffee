@@ -44,7 +44,7 @@ class AsciiSerializer extends stream.Transform
 
 			data = JSON.parse data
 
-			if data.name
+			if data.hasOwnProperty 'name'
 				@name = data.name
 				@push "solid #{@name}\n"
 				continue
