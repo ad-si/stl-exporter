@@ -70,7 +70,7 @@ class BinarySerializer extends stream.Transform
 
 			data = JSON.parse data
 
-			if data.name
+			if data.hasOwnProperty 'name'
 				@name = data.name
 
 				arrayBuffer = new ArrayBuffer(
