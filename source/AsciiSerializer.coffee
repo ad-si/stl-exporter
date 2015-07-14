@@ -49,10 +49,11 @@ class AsciiSerializer extends stream.Transform
 				@push "solid #{@name}\n"
 				continue
 
-			if @options.beautify
-				@push createBeautifiedFacetString data
-			else
-				@push createFacetString data
+			if data.hasOwnProperty 'vertices'
+				if @options.beautify
+					@push createBeautifiedFacetString data
+				else
+					@push createFacetString data
 
 		done()
 

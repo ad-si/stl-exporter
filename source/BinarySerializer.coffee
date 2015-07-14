@@ -88,7 +88,8 @@ class BinarySerializer extends stream.Transform
 
 				continue
 
-			@push @_createFacetString data
+			if data.hasOwnProperty 'vertices'
+				@push @_createFacetString data
 
 		done()
 
