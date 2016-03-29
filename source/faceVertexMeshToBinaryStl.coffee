@@ -1,4 +1,4 @@
-writeStringToBufferView = require './helpers/writeStringToBufferView.coffee'
+writeStringToBufferView = require './helpers/writeStringToBufferView'
 
 module.exports = (model) ->
 	{faceNormalCoordinates, faceVertexIndices, vertexCoordinates, name} = model
