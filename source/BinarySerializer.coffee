@@ -1,17 +1,6 @@
 stream = require 'stream'
-textEncoding = require 'text-encoding'
 bufferConverter = require 'buffer-converter'
-
-TextEncoder = textEncoding.TextEncoder
-TextDecoder = textEncoding.TextDecoder
-
-
-writeStringToBufferView = (string, bufferView) ->
-	stringUint8array = TextEncoder().encode string
-
-	for index in [0...bufferView.byteLength]
-		bufferView.setUint8 index, stringUint8array[index] || 0
-
+writeStringToBufferView = require './helpers/writeStringToBufferView.coffee'
 
 class BinarySerializer extends stream.Transform
 	constructor: (@options = {}) ->
