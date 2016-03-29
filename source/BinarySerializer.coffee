@@ -1,6 +1,6 @@
 stream = require 'stream'
 bufferConverter = require 'buffer-converter'
-writeStringToBufferView = require './helpers/writeStringToBufferView.coffee'
+writeStringToBufferView = require './helpers/writeStringToBufferView'
 
 class BinarySerializer extends stream.Transform
 	constructor: (@options = {}) ->
