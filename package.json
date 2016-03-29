@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "buffer-converter": "^1.0.0",
-    "text-encoding": "^0.5.2"
+    "text-encoding": "0.5.5"
   },
   "repository": {
     "type": "git",
