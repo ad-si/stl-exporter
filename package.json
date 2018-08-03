@@ -20,15 +20,15 @@
   "author": "Adrian Sieber",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^2.1.2",
+    "chai": "^4.1.2",
     "coffee-script": "^1.9.1",
     "js-yaml": "^3.2.7",
-    "mocha": "^2.2.1",
-    "stl-models": "^0.6.0"
+    "mocha": "^5.2.0",
+    "stl-models": "^0.12.0"
   },
   "dependencies": {
     "buffer-converter": "^1.0.0",
-    "text-encoding": "0.5.5"
+    "text-encoding": "0.6.4"
   },
   "repository": {
     "type": "git",
