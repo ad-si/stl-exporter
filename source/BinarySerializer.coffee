@@ -3,11 +3,11 @@ bufferConverter = require 'buffer-converter'
 writeStringToBufferView = require './helpers/writeStringToBufferView'
 
 class BinarySerializer extends stream.Transform
-	constructor: (@options = {}) ->
-		@options.writableObjectMode ?= true
-		@options.readableObjectMode ?= false
-		#@options.encoding ?= 'binary'
-		super @options
+	constructor: (options = {}) ->
+		options.writableObjectMode ?= true
+		options.readableObjectMode ?= false
+		#options.encoding ?= 'binary'
+		super options
 
 		@internalBuffer = []
 		@name = ''
