@@ -25,11 +25,11 @@ createBeautifiedFacetString = (face) ->
 
 
 class AsciiSerializer extends stream.Transform
-	constructor: (@options = {}) ->
-		@options.writableObjectMode ?= true
-		@options.readableObjectMode ?= false
-		super @options
-
+	constructor: (options = {}) ->
+		options.writableObjectMode ?= true
+		options.readableObjectMode ?= false
+		super options
+		@options = options
 		@internalBuffer = []
 		@name = ''
 
