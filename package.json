@@ -22,12 +22,12 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "coffeescript": "^2.0.0",
-    "js-yaml": "^3.2.7",
     "mocha": "^5.2.0",
     "stl-models": "^0.12.0"
   },
   "dependencies": {
     "buffer-converter": "^1.0.0",
+    "js-yaml": "^3.2.7",
     "text-encoding": "0.6.4"
   },
   "repository": {
