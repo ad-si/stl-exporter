@@ -2,33 +2,45 @@
   "name": "stl-exporter",
   "version": "0.3.6",
   "description": "Convert face-vertex, or polygon meshes to ascii and binary STLs",
-  "main": "build/index.js",
-  "bin": {
-    "stl-exporter": "cli/index.js"
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
-  "directories": {
-    "test": "test"
+  "bin": {
+    "stl-exporter": "./dist/cli-bin.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
   },
   "scripts": {
-    "test": "mocha -r coffeescript/register test/**/*.coffee",
-    "build": "coffee -c -o build source",
-    "prepare": "npm run build && npm test"
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepare": "npm run build"
   },
   "keywords": [
     "STL"
   ],
   "author": "Adrian Sieber",
   "license": "MIT",
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "coffeescript": "^2.0.0",
-    "mocha": "^5.2.0",
-    "stl-models": "^0.12.0"
-  },
   "dependencies": {
-    "buffer-converter": "^1.0.0",
-    "js-yaml": "^3.2.7",
-    "text-encoding": "0.6.4"
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.10.0",
+    "stl-models": "^0.12.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.8"
   },
   "repository": {
     "type": "git",
